@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: serverless-simulaion
+  labels:
+    app: serverless-simulaion
+spec:
+  template:
+    metadata:
+      name: serverless-simulaion
+      labels:
+        app: serverless-simulaion
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: scaler
+#          需要替换为选手实现的scaler镜像地址
+          image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/scaler:v0.6.1
+          command: ["./run.sh"]
+        - name: serverless-simulator
+          image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.0.0
