@@ -1,3 +1,4 @@
 .idea
 _output
 /data/data_training/
+/scaler

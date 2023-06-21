@@ -15,7 +15,7 @@ spec:
       containers:
         - name: scaler
 #          需要替换为选手实现的scaler镜像地址
-          image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/scaler:v0.6.1
+          image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/scaler:v0.7.1
           command: ["./run.sh"]
         - name: serverless-simulator
-          image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.0.0
+          image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.1.0
