@@ -1,14 +1,14 @@
 #!/bin/bash
 
-set -x
-
 ./scaler &
+echo "Scaler is starting..."
 
 SCALER_PID=$!
 
 while true; do
-  nc -z localhost 9001
+  nc -z localhost 9001 > /dev/null 2>&1
   if [ $? -eq 0 ]; then
+    echo "Scaler is now available."
     break
   else
     sleep 1
@@ -16,8 +16,9 @@ while true; do
 done
 
 while true; do
-  nc -z localhost 9000
+  nc -z localhost 9000 > /dev/null 2>&1
   if [ $? -eq 0 ]; then
+    echo "Simulator is now available."
     break
   else
     sleep 1
@@ -25,11 +26,11 @@ while true; do
 done
 
 while true; do
-    nc -z localhost 9000
+    nc -z localhost 9000 > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         sleep 1
     else
-        echo "No process is listening on port 9000, stopping the scaler process..."
+        echo "Simulator(:9000) has stopped, stopping the Scaler process..."
         kill $SCALER_PID
         exit 0
     fi
