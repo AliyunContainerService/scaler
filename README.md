@@ -211,3 +211,6 @@ https://tianchi.aliyun.com/forum/post/558730
 
 # 注意
 项目中的run.sh将作为容器的脚本，选手提交时请不要修改run.sh的内容，否则可能会导致评测失败。
+
+# Check submission
+- https://tianchi.aliyun.com/competition/entrance/532103/submission/1105

@@ -4,6 +4,7 @@ metadata:
   name: serverless-simulaion
   labels:
     app: serverless-simulaion
+  namespace: ml-infra
 spec:
   template:
     metadata:
@@ -14,12 +15,11 @@ spec:
       restartPolicy: Never
       containers:
       - name: scaler
-        #  需要替换为选手实现的scaler镜像地址
-        image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/scaler:v0.7.1
+        image: autra-cn-beijing.cr.volces.com/autra/volcengine/wei_scaler_test:v1.0
         command: ["./run.sh"]
       - name: serverless-simulator
-        image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.3.1
+        # registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.3.1
+        image: autra-cn-beijing.cr.volces.com/autra/volcengine/wei_simulator_test:v1.0
         command: ["./run.sh" ]
-        # 需要替换为选手希望测试的数据集名称，数据集的名称可以参考data/data_trainning.tar.gz解压后的目录结构
-        # 不填写参数时，默认会测试所有的数据集
-        args: ["function_smoke_test"]
+        # args: ["function_smoke_test"]
+        args: ["dataSet_1"]

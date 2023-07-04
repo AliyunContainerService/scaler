@@ -3,3 +3,4 @@ _output
 /data/data_training/
 /scaler
 /hack/serverless-simulaion-test.yaml
+.kubeconfig
