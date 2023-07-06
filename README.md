@@ -189,20 +189,23 @@ docker buildx build --platform linux/amd64 -t registry.cn-shanghai.aliyuncs.com/
 
 ### 部署测试job
 
-`kubectl apply -f hack/serverless-simulaion.yaml`
+`kubectl apply -f hack/serverless-simulation.yaml`
 
-执行后， 会在对应命名空间下生成名为serverless-simulaion 的job对象，该job的pod中包含两个容器， 一个是scaler 的容器， 一个是serverless-simulator 的容器， 可以使用kubectl命令查看:
+执行后， 会在对应命名空间下生成名为serverless-simulation 的job对象，该job的pod中包含两个容器， 一个是scaler 的容器， 一个是serverless-simulator 的容器， 可以使用kubectl命令查看:
 
-`kubectl get jobs serverless-simulaion -o yaml`
+`kubectl get jobs serverless-simulation -o yaml`
 
 可以通过 `kubectl logs -f ` 命令查看pod 里两个容器产生的日志，进而进行问题的排查：
 
 ```
 #查看scaler 容器日志: 
-kubectl logs jobs/serverless-simulaion scaler
+kubectl logs jobs/serverless-simulation scaler
 
 # 查看simulator 容器日志:
-kubectl logs jobs/serverless-simulaion serverless-simulator
+kubectl logs jobs/serverless-simulation serverless-simulator
+
+# 查看当前的数据统计
+kubectl exec jobs/serverless-simulation -c scaler -- curl http://127.0.0.1:9000/
 ```
 
 # 赛题提交说明
