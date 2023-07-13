@@ -18,7 +18,7 @@ spec:
         image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/scaler:v0.7.1
         command: ["./run.sh"]
       - name: serverless-simulator
-        image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.3.1
+        image: registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.3.2
         command: ["./run.sh" ]
         # 需要替换为选手希望测试的数据集名称，数据集的名称可以参考data/data_trainning.tar.gz解压后的目录结构
         # 不填写参数时，默认会测试所有的数据集
