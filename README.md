@@ -2,11 +2,13 @@
 # scaler实现指南
 
 本赛题需要选手实现一个 Scaler 模块的功能。在实际生产环境中一个 Scaler 模块为了实现弹性伸缩的功能，需要解决很多工程问题，而具体的工程问题往往和实际的环境和技术栈相关。所以本赛题通过仿真框架屏蔽了这些因环境而异的繁琐工程细节，选手只聚焦在 Scaler 核心逻辑即可。
-在pkg/scheduler/simple.go 基础上实现`Scheduler`接口(pkg/scheduler/interface.go)，确保实现的函数可以完成下述功能:
+本赛题提供了go和java语言的参考实现，选手可以参考其中的任意一种语言实现，也可以自行选择其他语言实现。
+这里以go语言为例，选手实现的代码需要实现Scaler接口(go/pkg/scaler/interface.go)，确保实现的函数可以完成下述功能:
+在go/pkg/scheduler/simple.go 基础上实现`Scheduler`接口(go/pkg/scheduler/interface.go)，确保实现的函数可以完成下述功能:
 * Assign:为请求分配一个应用实例，一个应用实例只能被分配给一个请求，如果无应用实例存在则需要冷启动，重新创建一个实例。无论是Kubernetes中Pod 还是 FaaS 函数，应用实例的启动过程都包括两个部分：实例的分配（CreateSlot）以及应用环境初始化（Init）。然后，实例才可以正常的处理请求
-  ![img.png](img.png)
+  ![img.png](images/img.png)
 * Idle:释放请求占用的应用实例，这个实例如果没有被回收， 可以被下次调用请求复用
-  ![img_1.png](img_1.png)
+  ![img_1.png](images/img_1.png)
 
 选手可以基于赛题方给出的数据集(data/data_training.tar.gz),解压后进行本地调试。
 赛题方同时提供了用于测试选手代码实现效果的镜像(registry.cn-beijing.aliyuncs.com/cloudnative-challenge/simulator:v1.0.0)，已经嵌入了以上训练数据集，选手可以通过以下本地测试方式进行调试。
@@ -29,6 +31,7 @@ metas 数据集包含了一系列的元数据记录，每条记录包含一项�
 * initDurationInMs: 表示任务初始化的时间，单位为毫秒。
 
 ## 接口文档
+**注意：以下说明以go语言为例，其他语言请参考对应语言的数据结构定义。**
 ### Assign 方法
 Assign 方法是一个核心接口，其主要目的是分配资源实例以满足任务请求。
 Assign方法的核心逻辑可能如下：
