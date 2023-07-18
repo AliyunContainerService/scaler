@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package serverless.simulator;
+
+option java_package = "protobuf";
+option java_outer_classname = "SchedulerProto";
+
+service Scaler {
+  rpc Assign(AssignRequest) returns(AssignReply);
+  rpc Idle(IdleRequest) returns(IdleReply);
+}
+
+message AssignRequest {
+  string request_id = 1;
+  uint64 timestamp = 2;
+  Meta meta_data = 3;
+}
+
+message AssignReply {
+  Status status = 1;
+  Assignment assigment = 2;
+  optional string error_message = 3;
+}
+
+message IdleRequest{
+  Assignment assigment = 1;
+  Result result = 2;
+}
+
+message IdleReply{
+  Status status = 1;
+  optional string error_message = 3;
+}
+
+enum Status{
+  Ok = 0;
+  Throttle = 1;
+  InternalError = 2;
+  NotFound = 3;
+  InvalidArgument = 4;
+  InvalidAssigment = 5;
+}
+
+
+message Meta{
+  string key = 1;
+  string runtime = 3;
+  uint32 timeout_in_secs = 4;
+  uint64 memory_in_mb = 5;
+}
+
+message Assignment {
+  string request_id = 1;
+  string meta_key = 2;
+  string instance_id = 3;
+}
+
+message Result {
+  int32 status_code = 1;
+  uint64 duration_in_ms = 2;
+  optional bool need_destroy = 3;
+  optional string reason = 4;
+}
+
+
+//the following proto should used in scaler module
+service Platform {
+  //Slot
+  rpc CreateSlot(CreateSlotRequest) returns (CreateSlotReply);
+  rpc DestroySlot(DestroySlotRequest) returns(DestroySlotReply);
+
+  //Init
+  rpc Init(InitRequest) returns(InitReply);
+}
+
+
+
+message CreateSlotRequest{
+  string request_id = 1;
+  ResourceConfig resource_config = 2;
+}
+
+message CreateSlotReply{
+  Status status = 1;
+  optional Slot slot = 2;
+  optional string error_message = 3;
+}
+
+message DestroySlotRequest{
+  string request_id = 1;
+  string id = 2;
+  optional string reason = 3;
+}
+
+message DestroySlotReply{
+  Status status = 1;
+  optional string error_message = 2;
+}
+
+message Slot{
+  string id = 1;
+  ResourceConfig resource_config = 2;
+  uint64 create_time = 3;
+  uint64 create_duration_in_ms = 4;
+}
+
+message InitRequest{
+  string request_id = 1;
+  string slot_id = 2;
+  string instance_id = 3;
+  Meta meta_data = 4;
+}
+
+message InitReply{
+  Status status = 1;
+  uint64 create_time = 2;
+  uint64 init_duration_in_ms = 3;
+  optional string error_message = 4;
+}
+
+message ResourceConfig{
+  uint64 memory_in_megabytes = 1;
+}
+
