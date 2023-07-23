@@ -16,6 +16,7 @@ package server
 import (
 	"context"
 	"fmt"
+
 	"github.com/AliyunContainerService/scaler/go/pkg/config"
 	"github.com/AliyunContainerService/scaler/go/pkg/manager"
 	"github.com/AliyunContainerService/scaler/go/pkg/model"
